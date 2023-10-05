@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	dto "myapp/dto/result"
+
 	voterdto "myapp/dto/voters"
 	"myapp/models"
 	"myapp/repositories"
@@ -9,6 +11,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )
 
@@ -33,7 +36,7 @@ func (h *handlerV) FindVoter(c echo.Context) error {
 }
 
 func (h *handlerV) GetVoter(c echo.Context) error {
-	voterId, _ := strconv.Atoi(c.Param("voterId"))
+	voterId, _ := strconv.ParseInt(c.Param("voterId"), 10, 64)
 
 	voter, err := h.VoterRepository.GetVoter(voterId)
 	if err != nil {
@@ -48,17 +51,23 @@ func (h *handlerV) GetVoter(c echo.Context) error {
 }
 
 func (h *handlerV) CreateVoter(c echo.Context) error {
-	form, err := c.MultipartForm()
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
+
+	request := new(voterdto.CreateVoterRequest)
+	if err := c.Bind(request); err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
+	
+	validation := validator.New()
+	err := validation.Struct(request)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+	fmt.Print(request)
 
-	voterName := form.Value["voter_name"][0]
-	voterPaslonId, _ := strconv.ParseInt(form.Value["paslon_id"][0], 10, 10)
-
-	voter := models.Voter {
-		VoterName: voterName,
-		PaslonID: int(voterPaslonId),
+	voter := models.Voter{
+		ID: request.ID,
+		VoterName: request.VoterName,
+		PaslonID: request.PaslonID,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -73,7 +82,7 @@ func (h *handlerV) CreateVoter(c echo.Context) error {
 }
 
 func (h *handlerV) DeleteVoter(c echo.Context) error {
-	voterId, _ := strconv.Atoi(c.Param("voterId"))
+	voterId, _ := strconv.ParseInt(c.Param("voterId"), 10, 64)
 
 	voter, err := h.VoterRepository.GetVoter(voterId)
 	if err != nil {

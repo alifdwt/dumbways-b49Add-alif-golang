@@ -7,7 +7,7 @@ import (
 )
 
 func RunMigration() {
-	err := postgres.DB.AutoMigrate(&models.Paslon{}, &models.Voter{})
+	err := postgres.DB.AutoMigrate(&models.Paslon{}, &models.Voter{}, &models.Party{})
 
 	if err != nil {
 		fmt.Println(err)

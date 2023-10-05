@@ -9,7 +9,7 @@ type Paslon struct {
 	Image string `json:"image" gorm:"type:varchar(255)"`
 	PostedAt time.Time `json:"posted_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	Voter []Voter `json:"voters"`
+	Party []Party `json:"party"`
 }
 
 func (Paslon) TableName() string {

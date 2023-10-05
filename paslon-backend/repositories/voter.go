@@ -8,7 +8,7 @@ import (
 
 type VoterRepository interface {
 	FindVoters() ([]models.Voter, error)
-	GetVoter(ID int) (models.Voter, error)
+	GetVoter(ID int64) (models.Voter, error)
 	CreateVoter(voter models.Voter) (models.Voter, error)
 	// UpdateVoter(voter models.Voter) (models.Voter, error)
 	DeleteVoter(voter models.Voter) (models.Voter, error)
@@ -25,7 +25,7 @@ func (r *repository) FindVoters() ([]models.Voter, error) {
 	return voter, err
 }
 
-func (r *repository) GetVoter(ID int) (models.Voter, error) {
+func (r *repository) GetVoter(ID int64) (models.Voter, error) {
 	var voter models.Voter
 	err := r.db.Preload("Paslon").First(&voter, ID).Error
 

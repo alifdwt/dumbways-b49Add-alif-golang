@@ -26,7 +26,7 @@ func RepositoryPaslon(db *gorm.DB) *repository {
 func (r *repository) FindPaslons() ([]models.Paslon, error) {
 	var paslons []models.Paslon
 	// err := r.db.Raw("SELECT * FROM paslons").Scan(&paslons).Error
-	err := r.db.Preload("Voter").Find(&paslons).Error
+	err := r.db.Preload("Party").Find(&paslons).Error
 
 	return paslons, err
 }
@@ -34,7 +34,7 @@ func (r *repository) FindPaslons() ([]models.Paslon, error) {
 func (r *repository) GetPaslon(ID int) (models.Paslon, error) {
 	var paslon models.Paslon
 	// err := r.db.Raw("SELECT * FROM paslons WHERE id=?", ID).Scan(&paslon).Error
-	err := r.db.First(&paslon, ID).Error
+	err := r.db.Preload("Party").First(&paslon, ID).Error
 
 	return paslon, err
 }

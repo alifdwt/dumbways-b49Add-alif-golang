@@ -5,7 +5,7 @@ import (
 )
 
 type Voter struct {
-	ID int `json:"id" gorm:"primaryKey"`
+	ID int64 `json:"id" gorm:"primaryKey"`
 	PaslonID int `json:"paslon_id"`
 	VoterName string `json:"voter_name" gorm:"type:varchar(255)"`
 	CreatedAt time.Time `json:"created_at"`

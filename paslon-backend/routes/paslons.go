@@ -14,9 +14,9 @@ func PaslonRoutes(e *echo.Group) {
 	h := handlers.HandlerPaslon(paslonRepository)
 
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"https://alifdwt.com", "https://www.google.com", "http://localhost:5173"},
+		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"OPTIONS", "GET", "POST", "PUT"},
-		AllowedHeaders: []string{"Content-Type", "X-CSRF-Token"},
+		AllowedHeaders: []string{"Content-Type", "X-CSRF-Token", "Authorization"},
 		Debug:          true,
 	})
 	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))

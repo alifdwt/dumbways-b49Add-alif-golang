@@ -47,7 +47,7 @@ func (h *handler) GetPaslon(c echo.Context) error {
 			})
 	}
 
-	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: convertResponse(paslon)})
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: paslon})
 }
 
 func (h* handler) CreatePaslon(c echo.Context) error {

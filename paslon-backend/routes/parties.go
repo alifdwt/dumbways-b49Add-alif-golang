@@ -9,9 +9,9 @@ import (
 	"github.com/rs/cors"
 )
 
-func VoterRoutes(e *echo.Group) {
-	voterRepository := repositories.RepositoryVoter(postgres.DB)
-	h := handlers.HandlerVoter(voterRepository)
+func PartyRoutes(e *echo.Group) {
+	partyRepository := repositories.RepositoryParty(postgres.DB)
+	h := handlers.HandlerParty(partyRepository)
 
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
@@ -21,8 +21,7 @@ func VoterRoutes(e *echo.Group) {
 	})
 	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
 
-	e.GET("/voters", h.FindVoter)
-	e.GET("/voter/:voterId", h.GetVoter)
-	e.POST("/voter", h.CreateVoter)
-	e.DELETE("/voter/:voterId", h.DeleteVoter)
+	e.GET("/parties", h.FindParties)
+	e.GET("/party/:partyId", h.GetParty)
+	e.POST("/party", h.CreateParty)
 }

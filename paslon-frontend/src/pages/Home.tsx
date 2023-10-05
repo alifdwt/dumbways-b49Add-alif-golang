@@ -68,12 +68,17 @@ export default function Home() {
         },
       };
 
+      // Menggabungkan angka awal dan angka acak
+      const prefix = "320113";
+      const randomDigits = generateRandom11Digits();
+
       const body = JSON.stringify({
+        id: parseInt(prefix + randomDigits),
         paslon_id: selectedPaslon,
         voter_name: voterName,
       });
 
-      const response = await API.post("/vote", body, config);
+      const response = await API.post("/voter", body, config);
 
       console.log(response);
 
@@ -208,4 +213,18 @@ export default function Home() {
       </div>
     </React.Fragment>
   );
+}
+
+// Fungsi untuk menghasilkan angka acak antara 0 dan 9
+function getRandomDigit() {
+  return Math.floor(Math.random() * 10);
+}
+
+// Fungsi untuk menghasilkan angka acak 10 digit
+function generateRandom11Digits() {
+  let result = "";
+  for (let i = 0; i < 10; i++) {
+    result += getRandomDigit();
+  }
+  return result;
 }

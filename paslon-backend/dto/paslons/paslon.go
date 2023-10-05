@@ -13,8 +13,14 @@ type UpdatePaslonRequest struct {
 }
 
 type PaslonResponse struct {
-	ID     int    `json:"id"`
-	Name   string `json:"name" form:"name" validate:"required"`
-	Vision string `json:"vision" form:"vision" validate:"required"`
-	Image  string `json:"image" form:"image" validate:"required"`
+	ID     int         `json:"id"`
+	Name   string      `json:"name" form:"name" validate:"required"`
+	Vision string      `json:"vision" form:"vision" validate:"required"`
+	Image  string      `json:"image" form:"image" validate:"required"`
+	Voters []VoterInfo `json:"voters"`
+}
+
+type VoterInfo struct {
+	ID        int64  `json:"id"`
+	VoterName string `json:"voter_name"`
 }
