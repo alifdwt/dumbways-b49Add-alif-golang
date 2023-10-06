@@ -24,4 +24,6 @@ func PartyRoutes(e *echo.Group) {
 	e.GET("/parties", h.FindParties)
 	e.GET("/party/:partyId", h.GetParty)
 	e.POST("/party", h.CreateParty)
+	e.PATCH("/party/:partyId", h.UpdateParty)
+	e.DELETE("/party/:partyId", h.DeleteParty)
 }
