@@ -6,4 +6,5 @@ func RouteInit(e *echo.Group) {
 	PaslonRoutes(e)
 	VoterRoutes(e)
 	PartyRoutes(e)
+	UserRoutes(e)
 }

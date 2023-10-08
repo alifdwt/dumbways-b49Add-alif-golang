@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	dto "myapp/dto/result"
 
 	voterdto "myapp/dto/voters"
@@ -62,7 +61,6 @@ func (h *handlerV) CreateVoter(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
-	fmt.Print(request)
 
 	voter := models.Voter{
 		ID: request.ID,
