@@ -71,11 +71,11 @@ Proyek ini adalah contoh aplikasi CRUD (Create, Read, Update, Delete) sederhana 
 {
     "code": 200,
     "data": {
-        "id": 2,
-        "full_name": "Enzo Gorlomi",
-        "email": "enzo@gmail.com"
+        "id": 3,
+        "full_name": "Dominic Deccoco",
+        "email": "dominic@gmail.com"
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVuem9AZ21haWwuY29tIiwidXNlcl9pZCI6Mn0.U1VG-a_DVWHNobsJNKrNK6AM_MM9u1dULSO6GflO93Y"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvbWluaWNAZ21haWwuY29tIiwidXNlcl9pZCI6M30.aoPV5Ds-BCwY04ZD-7fG8xT_joFqTeudeoRFFZ7-zDw"
 }
 ```
 
