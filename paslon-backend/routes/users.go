@@ -23,4 +23,5 @@ func UserRoutes(e *echo.Group) {
 
 	e.POST("/auth/register", h.Register)
 	e.POST("/auth/login", h.Login)
+	e.GET("/auth/check", h.Check)
 }

@@ -7,6 +7,7 @@ import (
 	"myapp/models"
 	"myapp/repositories"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -49,7 +50,7 @@ func (h *handlerU) Register(c echo.Context) error {
 	}
 
 	user := models.User{
-		VoterID: request.VoterID,
+		// VoterID: request.VoterID,
 		FullName: request.FullName,
 		Email: request.Email,
 		Password: string(password),
@@ -105,15 +106,67 @@ func (h *handlerU) Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, dto.LoginResult{Code: http.StatusOK, Data: convertUserResponse(user), Token: tokenString})
 }
 
-// func (h *handlerU) Check(c echo.Context) error {
+func (h *handlerU) Check(c echo.Context) error {
+	tokenString := c.Request().Header.Get("Authorization")
+	if tokenString == "" {
+		return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"error": "unauthorized",
+		})
+	}
 
-// }
+	// Pastikan token memiliki format "Bearer <token>"
+	tokenParts := strings.Split(tokenString, " ")
+	if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
+		return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"error": "unauthorized",
+		})
+	}
+
+	tokenString = tokenParts[1]
+
+	// Validasi token
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// Ganti dengan kunci rahasia yang sesuai
+		return []byte("secret-jwt-token"), nil
+	})
+
+	if err != nil || !token.Valid {
+		return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+			"error": "unauthorized",
+		})
+	}
+
+	// Jika token valid, Anda dapat mengakses informasi yang ada di dalamnya
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"error": "internal server error",
+		})
+	}
+
+	userID, ok := claims["user_id"].(float64) // Sesuaikan dengan nama klaim yang Anda gunakan dalam token
+	if !ok {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"error": "internal server error",
+		})
+	}
+	fmt.Println(userID)
+
+	// Lakukan operasi yang sesuai dengan informasi yang Anda dapatkan dari token
+	// Contoh: Cari pengguna berdasarkan userID
+	// user, err := UserRepository.FindUserByID(int(userID))
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"code":    http.StatusOK,
+		"message": "Token is valid!",
+	})
+}
 
 
 func convertUserResponse(p models.User) *userdto.UserResponse {
 	return &userdto.UserResponse{
 		ID: p.ID,
-		VoterID: p.VoterID,
+		// VoterID: p.VoterID,
 		FullName: p.FullName,
 		Email: p.Email,
 	}

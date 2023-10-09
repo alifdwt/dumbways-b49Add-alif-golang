@@ -63,9 +63,10 @@ func (h *handlerV) CreateVoter(c echo.Context) error {
 	}
 
 	voter := models.Voter{
-		ID: request.ID,
+		// ID: request.ID,
 		VoterName: request.VoterName,
 		PaslonID: request.PaslonID,
+		UserID: request.UserID,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -100,5 +101,6 @@ func convertVoterResponse(p models.Voter) *voterdto.VoterResponse {
 		ID: p.ID,
 		VoterName: p.VoterName,
 		PaslonID: p.PaslonID,
+		
 	}
 }
