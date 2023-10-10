@@ -6,20 +6,11 @@ import (
 	"myapp/repositories"
 
 	"github.com/labstack/echo/v4"
-	"github.com/rs/cors"
 )
 
 func PaslonRoutes(e *echo.Group) {
 	paslonRepository := repositories.RepositoryPaslon(postgres.DB)
 	h := handlers.HandlerPaslon(paslonRepository)
-
-	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"OPTIONS", "GET", "POST", "PUT"},
-		AllowedHeaders: []string{"Content-Type", "X-CSRF-Token", "Authorization"},
-		Debug:          true,
-	})
-	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
 
 	e.GET("/paslons", h.FindPaslons)
 	e.GET("/paslon/:paslonId", h.GetPaslon)

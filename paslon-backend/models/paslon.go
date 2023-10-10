@@ -13,5 +13,5 @@ type Paslon struct {
 }
 
 func (Paslon) TableName() string {
-    return "paslons" // Nama tabel yang digunakan di database
+    return "paslons"
 }

@@ -63,7 +63,6 @@ func (h *handlerV) CreateVoter(c echo.Context) error {
 	}
 
 	voter := models.Voter{
-		// ID: request.ID,
 		VoterName: request.VoterName,
 		PaslonID: request.PaslonID,
 		UserID: request.UserID,

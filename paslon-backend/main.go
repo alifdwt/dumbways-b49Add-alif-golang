@@ -7,6 +7,7 @@ import (
 	"myapp/routes"
 
 	"github.com/labstack/echo/v4"
+	"github.com/rs/cors"
 )
 
 
@@ -16,6 +17,13 @@ func main() {
 
 	postgres.DatabaseInit()
 	database.RunMigration()
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"OPTIONS", "GET", "POST", "PUT"},
+		AllowedHeaders: []string{"Content-Type", "X-CSRF-Token", "Authorization"},
+		Debug:          true,
+	})
+	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
 
 	routes.RouteInit(e.Group("/api/v1"))
 

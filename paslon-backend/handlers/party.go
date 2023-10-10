@@ -9,8 +9,6 @@ import (
 	"strconv"
 	"time"
 
-	// voterdto "myapp/dto/parties"
-
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -65,7 +63,6 @@ func (h *handlerP) CreateParty(c echo.Context) error {
 	}
 
 	party := models.Party{
-		// ID: request.ID,
 		Name: request.Name,
 		PaslonID: request.PaslonID,
 		CreatedAt: time.Now(),

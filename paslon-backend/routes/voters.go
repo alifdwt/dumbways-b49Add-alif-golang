@@ -6,20 +6,11 @@ import (
 	"myapp/repositories"
 
 	"github.com/labstack/echo/v4"
-	"github.com/rs/cors"
 )
 
 func VoterRoutes(e *echo.Group) {
 	voterRepository := repositories.RepositoryVoter(postgres.DB)
 	h := handlers.HandlerVoter(voterRepository)
-
-	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"OPTIONS", "GET", "POST", "PUT"},
-		AllowedHeaders: []string{"Content-Type", "X-CSRF-Token", "Authorization"},
-		Debug:          true,
-	})
-	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
 
 	e.GET("/voters", h.FindVoter)
 	e.GET("/voter/:voterId", h.GetVoter)

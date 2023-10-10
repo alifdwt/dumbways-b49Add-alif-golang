@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	paslonsdto "myapp/dto/paslons"
 	dto "myapp/dto/result"
 	"myapp/models"
@@ -153,10 +152,7 @@ func (h *handler) DeletePaslon(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	resp, _ := cloudinaryconfig.DeleteCloudinary("Pemilu", paslon.Name)
-	if resp == "ok" {
-		fmt.Println("Gambar " + paslon.Name + " berhasil dihapus dari Cloudinary!")
-	}
+	cloudinaryconfig.DeleteCloudinary("Pemilu", paslon.Name)
 
 	data, err := h.PaslonRepository.DeletePaslon(paslon, paslonId)
 	if err != nil {
