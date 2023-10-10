@@ -9,5 +9,5 @@ type User struct {
 	Password string `json:"password" gorm:"type:varchar(255)"`
 	PostedAt time.Time `json:"posted_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	Voter []Voter `json:"voter"`
+	Voter Voter `json:"voter"`
 }
